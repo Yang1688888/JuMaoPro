@@ -1016,7 +1016,7 @@ async def main(workList, uid, oocr, oocrDet):
 
         elif platform.system() == "Linux":
             chrome_path = os.path.expanduser(
-                "~/.local/share/pyppeteer/local-chromium/1181205/chromium-linux-arm64/chrome"
+                "~/.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome"
             )
             download_path = os.path.expanduser(
                 "~/.local/share/pyppeteer/local-chromium/1181205/"
@@ -1027,8 +1027,6 @@ async def main(workList, uid, oocr, oocrDet):
                 print("貌似第一次使用，未找到chrome，正在下载chrome浏览器....")
                 print("文件位于github，请耐心等待，如遇到网络问题可到项目地址手动下载")
                 download_url = "https://playwright.azureedge.net/builds/chromium/1088/chromium-linux-arm64.zip"
-                if 'arm' in platform.machine():
-                    download_url = "https://playwright.azureedge.net/builds/chromium/1088/chromium-linux-arm64.zip";
                 if not os.path.exists(download_path):
                     os.makedirs(download_path, exist_ok=True)
                 target_file = os.path.join(
