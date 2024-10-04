@@ -995,14 +995,38 @@ async def main(workList, uid, oocr, oocrDet):
                 "chrome-win32",
                 "chrome-win32",
             )
+            if os.path.exists(chrome_exe):
+                return chrome_exe
+            else:
+                print("貌似第一次使用，未找到chrome，正在下载chrome浏览器....")
+
+                chromeurl = "https://mirrors.huaweicloud.com/chromium-browser-snapshots/Win_x64/588429/chrome-win32.zip"
+                target_file = "chrome-win.zip"
+                await download_file(chromeurl, target_file)
+                with zipfile.ZipFile(target_file, "r") as zip_ref:
+                    zip_ref.extractall(chrome_dir)
+                os.remove(target_file)
+                for item in os.listdir(chmod_dir):
+                    source_item = os.path.join(chmod_dir, item)
+                    destination_item = os.path.join(chrome_dir, item)
+                    os.rename(source_item, destination_item)
+                print("解压安装完成")
+                await asyncio.sleep(1)
+                return chrome_exe
+
+        elif platform.system() == "Linux":
+            chrome_path = os.path.expanduser(
+                "~/.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome"
+            )
+            download_path = os.path.expanduser(
+                "~/.local/share/pyppeteer/local-chromium/1181205/"
+            )
             if os.path.isfile(chrome_path):
                 return chrome_path
             else:
                 print("貌似第一次使用，未找到chrome，正在下载chrome浏览器....")
                 print("文件位于github，请耐心等待，如遇到网络问题可到项目地址手动下载")
-                download_url = "https://mirrors.huaweicloud.com/chromium-browser-snapshots/Linux_x64/884014/chrome-linux.zip"
-                if 'arm' in platform.machine():
-                    download_url = "https://playwright.azureedge.net/builds/chromium/1088/chromium-linux-arm64.zip";
+                download_url = "https://playwright.azureedge.net/builds/chromium/1088/chromium-linux-arm64.zip"
                 if not os.path.exists(download_path):
                     os.makedirs(download_path, exist_ok=True)
                 target_file = os.path.join(
