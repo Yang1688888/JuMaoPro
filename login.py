@@ -1016,7 +1016,7 @@ async def main(workList, uid, oocr, oocrDet):
 
         elif platform.system() == "Linux":
             chrome_path = os.path.expanduser(
-                "~/.local/share/pyppeteer/local-chromium/1181205/chrome-linux/chrome"
+                "~/.local/share/pyppeteer/local-chromium/1181205/chromium-linux-arm64/chrome"
             )
             download_path = os.path.expanduser(
                 "~/.local/share/pyppeteer/local-chromium/1181205/"
